@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% comment %}
+{% load pagination %}
+{% endcomment %}
+{% load static %}
+
+{% block title %}
+    Cadastrar Produtor | {{ block.super }}
+{% endblock %}
+
+{% block container %}
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  {{ organic_farmer_address.form.as_p }}
+  {{ organic_farmer_contact.form.as_p }}
+<button type="submit" class="btn btn-primary btn-block">Salvar</button>
+</form>
+
+{% endblock %}

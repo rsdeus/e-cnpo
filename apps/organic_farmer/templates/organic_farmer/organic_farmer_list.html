@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% comment %}
+{% load pagination %}
+{% endcomment %}
+
+{% block title %}
+    Lista de Produtores Orgânicos | {{ block.super }}
+{% endblock %}
+
+
+{% block container %}
+<div>
+  <h3>Lista de Produtores Orgânicos</h>
+</div>
+<div class="row">
+  <div class="col-sm-2">
+    <div class="form-group">
+      <form class="form-inline-fluid" role="search" action="#">
+        <input name="q" class="form-control mb-sm-2" type="search" placeholder="Busca..." aria-label="Busca por Nome">
+      </form>
+    </div>
+  </div>
+  <div class="col-sm-10">
+    {% if user.is_staff %}
+    <a class="btn btn-outline-primary d-none d-lg-inline-block mb-3 mb-md-0 ml-md-3" href="#">Inserir Produtor</a>
+    {% endif %}
+    <div class="overflow-auto card-body rounded" style="max-width: 100%; max-height: 475px;">
+      {% for organic_farmer in organic_farmer_list %}
+      <div class="row mb-3">
+        <div class="col bg-light rounded p-3 mb-sm-2 mr-sm-2 border">
+          <h4>{{ organic_farmer.fantasy_name|upper }}</h4>
+          <p>Cidade: {{ organic_farmer.address.get_city }}</p>
+          <p>Nome de registro: {{ organic_farmer.name }}</p>
+          <p>Registro: {{ organic_farmer.cnpo_register }}</p>
+          <p>Tipo de Entidade: {{ organic_farmer.entity.entity_type.name }}</p>
+          <p>Entidade: {{ organic_farmer.entity.name }}</p>
+          <p>E-mail: {{ organic_farmer.contact.email }}</p>
+        </div>
+        <div class="col bg-light rounded p-3 mb-sm-2 border">
+          <h5>Escopos</h5>
+        {% for scope in organic_farmer.scope.all  %}
+          {{ scope.name }}{% if not forloop.last %}; {% endif %}
+        {% endfor %}
+          <h5>Atividades</h5>
+        {% for activity in organic_farmer.activities.all  %}
+          {{ activity.name|upper|linebreaksbr }}{% if not forloop.last %}; {% endif %}
+        {% endfor %}
+          <h5>Feiras</h5>
+        {% for organic_fair in organic_farmer.farmers_set.all  %}
+          {{ organic_fair|upper|linebreaksbr }};
+        {% endfor %}
+        {% if user.is_staff %}
+        <a class="btn btn-outline-primary d-none d-lg-inline-block mb-3 mb-md-0 ml-md-3" href="#">Atualizar</a>
+        {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% comment %}
+{% pagination request paginator page_obj %}
+{% endcomment %}
+{% endblock %}

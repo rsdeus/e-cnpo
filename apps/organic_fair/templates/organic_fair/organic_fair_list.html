@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% comment %}
+{% load pagination %}
+{% endcomment %}
+
+{% block title %}
+    Lista de Feiras Orgânicas | {{ block.super }}
+{% endblock %}
+
+
+{% block container %}
+<div>
+  <h3>Lista de Feiras Orgânicas</h>
+</div>
+<div class="row">
+  <div class="col-sm-2">
+    <div class="form-group">
+      <form class="form-inline-fluid" role="search" action="#">
+        <input name="q" class="form-control mb-sm-2" type="search" placeholder="Busca..." aria-label="Busca por Nome">
+      </form>
+    </div>
+  </div>
+  <div class="col-sm-10">
+    <div class="overflow-auto card-body rounded" style="max-width: 100%; max-height: 475px;">
+      {% for organic_fair in organic_fair_list %}
+      <div class="row mb-3">
+        <div class="col bg-light rounded p-3 mb-sm-2 mr-sm-2 border">
+          <h4>{{ organic_fair.name|upper }}</h4>
+          <p>Endereço: {{ organic_fair.address }}</p>
+        </div>
+        <div class="col bg-light rounded p-3 mb-sm-2 border">
+          <h5>Produtores</h5>
+        {% for organic_farmer in organic_fair.farmers.all  %}
+          {{ organic_farmer.name|upper|linebreaksbr }};
+        {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% comment %}
+{% pagination request paginator page_obj %}
+{% endcomment %}
+{% endblock %}
