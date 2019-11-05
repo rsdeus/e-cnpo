@@ -1,1 +1,1 @@
-web: gunicorn nhanduti.wsgi
+web: gunicorn nhanduti.wsgi --log-file -
