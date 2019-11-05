@@ -28,5 +28,5 @@ urlpatterns = [
     path('feiras-organicas/', include('apps.organic_fair.urls', namespace='organic_fair')),
     path('mapa/', include('apps.organic_map.urls', namespace='organic_map')),
     path('conta/', include('apps.accounts.urls', namespace='accounts')),
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
 ]
