@@ -62,6 +62,7 @@ class OrganicFarmerListView(generic.ListView):
     model = OrganicFarmer
     template_name = 'organic_farmer/organic_farmer_list.html'
     context_object_name = 'organic_farmer_list'
+    paginate_by = 1000
 
     def get_queryset(self):
         queryset = OrganicFarmer.objects.all()

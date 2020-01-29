@@ -1,24 +1,59 @@
 {% extends "base.html" %}
 
-{% load staticfiles leaflet_tags %}
-{% leaflet_css %}
-{% leaflet_js %}
-
-{% comment %}
-{% load pagination %}
-{% endcomment %}
-
 {% block title %}
-    Mapa dos Produtores e Feiras Orgânicas | {{ block.super }}
+    Mapa do Cadastro Nacional de Produtores Orgânicos - CNPO | {{ block.super }}
+{% endblock %}
+
+{% load staticfiles leaflet_tags %}
+
+{% block style %}
+  {{ block.super }}
+  <style>
+
+    .leaflet-container {  /* all maps */
+        height: 70%;
+        width: auto;
+    }
+
+  </style>
+{% endblock %}
+
+{% block header %}
+
+  {% leaflet_css %}
+  {% leaflet_js %}
+
+  <script type="text/javascript">
+      var dataurl = '{% url "organic_map:data" %}';
+
+      window.addEventListener("map:init", function (event) {
+        var map = event.detail.map;
+        // Download GeoJSON data with Ajax
+        fetch(dataurl)
+          .then(function(resp) {
+            return resp.json();
+          })
+          .then(function(data) {
+            L.geoJson(data, {
+              onEachFeature: function onEachFeature(feature, layer) {
+                var props = feature.properties;
+                var content = `<h3>${props.city}</h3><p>${props.city}</p>`;
+                layer.bindPopup(content);
+            }}).addTo(map);
+          });
+      });
+    </script>
+
 {% endblock %}
 
 
 {% block container %}
 
 <div>
-  <h3>Mapa dos Produtores e Feiras Orgânicas</h>
+  <h3>Mapa do Cadastro Nacional de Produtores Orgânicos - CNPO</h>
 </div>
 <div class="row">
+  <!--
   <div class="col-sm-2">
     <div class="form-group">
       <form class="form-inline-fluid" role="search" action="#">
@@ -26,50 +61,12 @@
       </form>
     </div>
   </div>
-  <div class="col-sm-10" style="max-width: 100%; height: 700px";>
+  -->
+  <div class="col-sm-12" style="max-width: 100%; height: 700px";>
 
-    {% leaflet_map "main" callback="window.map_init_basic" %}
+    {% leaflet_map "main" %}
 
   </div>
 </div>
-{% block stylesheets %}
-  {{ block.super }}
-  <style>
 
-    .leaflet-container {  /* all maps */
-        height:  600px;
-        width: auto;
-    }
-
-  </style>
-{% endblock %}
-{% block javascript %}
-  {{ block.super }}
-
-  <script type="text/javascript">
-      var fairIcon = L.icon({
-        iconUrl: '{% static "leaflet/images/market.png" %}',
-        iconSize: [25, 28]
-      })
-      var farmerIcon = L.icon({
-        iconUrl: '{% static "leaflet/images/farmer.png" %}',
-        iconSize: [25, 28]
-      })
-      function map_init_basic (map, options) {
-        {% for organic_map in organic_map_itens %}
-          L.marker([{{ organic_map.address.geolocation.y|iriencode }}, {{ organic_map.address.geolocation.x|iriencode }}], {icon: fairIcon}).addTo(map)
-          .bindPopup('{{ organic_map.name }} <br> {{ organic_map.address }}')
-          {% for organic_farmer in organic_map.farmers.all %}
-            L.marker([{{ organic_farmer.address.geolocation.y|iriencode }}, {{ organic_farmer.address.geolocation.x|iriencode }}], {icon: farmerIcon}).addTo(map)
-            .bindPopup('{{ organic_farmer.name }} <br> {{ organic_farmer.address }}')
-          {% endfor %}
-        {% endfor %}
-      }
-  </script>
-
-{% endblock %}
-
-{% comment %}
-{% pagination request paginator page_obj %}
-{% endcomment %}
 {% endblock %}

@@ -2,16 +2,34 @@
 
 {% load static %}
 
+{% block style %}
+
+	<style type="text/css">
+		#bemvindo {
+			background-image: url('{% static "fundo2.jpeg" %}');
+		}
+		#produtor {
+			background-image: url('{% static "produtor.jpeg" %}');
+		}
+	</style>
+
+{% endblock %}
+
 {% block container %}
 <div class="container">
     <div id="bemvindo" class="jumbotron page-header text-center">
       <p><h3>A Rede Para Acesso a Alimentos e Produtos Orgânicos, Saudáveis e Próximos a Você.</h></p>
-      <p><button class="btn btn-primary" href="#">Saiba mais</button></p>
+      <p><a class="btn btn-primary" href="/sobre/">Saiba mais</a></p>
+    </div>
+    <div id="produtor" class="jumbotron page-header text-center">
+      <p><h3>Busque por Produtores Orgânicos e Agroecológicos de todo o Brasil certificados e registrados pelo Ministério da Agricultura.</h></p>
+      <p><a class="btn btn-primary" href="{% url 'organic_farmer:organic_farmer_list' %}">Faça sua Busca</a></p>
     </div>
     <div class="jumbotron page-header text-center">
-      <p><h3>Busque por Produtores Orgânicos e Agroecológicos de todo o Brasil certificados e registrados pelo Ministério da Agricultura.</h></p>
-      <p><button class="btn btn-primary" href="#">Faça sua Busca</button></p>
+      <p><h3>Busque pelos Produtores Orgânicos Certificados também através do Mapa </h></p>
+      <p><a class="btn btn-primary" href="{% url 'organic_map:organic_map' %}">Acesso ao Mapa CNPO</a></p>
     </div>
+    <!--
     <div class="jumbotron page-header text-center">
       <p><h3>Está procurando por Feiras Orgânicas e Agroecológicas?</h></p>
       <p><h3>Busque em nosso site a Feira mais próxima de sua região.</h></p>
@@ -26,8 +44,9 @@
       <p><h3>Você é produtor ou comerciante de produtos orgânicos e agroecológicos e gostaria de comercializar através da nossa rede?</h></p>
       <p><button class="btn btn-primary" href="#">Entre em Contato</button></p>
     </div>
+    -->
     <div class="jumbotron page-header text-center">
-      <p><h3>A disponibilidade desses dados são públicos e de acesso gratuito, porém você pode contribuir para o site manter essa estrutura e seguir com a evolução do projeto através do <a href="#">APOIA.se</a></h></p>
+      <p><h3>A disponibilidade desses dados são públicos e de acesso gratuito, porém você pode contribuir para a manutenção e evolução desse projeto através do <a href="#">APOIA.se</a></h></p>
       <p><button class="btn btn-primary" href="#">Como Colaborar</button></p>
     </div>
 </div>

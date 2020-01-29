@@ -8,4 +8,4 @@ class OrganicFarmerConfig(AppConfig):
 
     def ready(self):
         OrganicFarmer = self.get_model("OrganicFarmer")
-        watson.register(OrganicFarmer, fields=("name", "fantasy_name", "address__city", "entity__name", "entity__entity_type__name", "scope__name", "activities__name"))
+        watson.register(OrganicFarmer, fields=("name", "cnpo_register", "address__city", "entity__name", "entity__entity_type__name", "scope__name", "activities__name"))

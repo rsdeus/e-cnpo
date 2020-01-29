@@ -1,7 +1,6 @@
 {% extends "base.html" %}
-{% comment %}
+
 {% load pagination %}
-{% endcomment %}
 
 {% block title %}
     Lista de Produtores Orgânicos | {{ block.super }}
@@ -10,7 +9,7 @@
 
 {% block container %}
 <div>
-  <h3>Lista de Produtores Orgânicos</h>
+  <h3>Cadastro Nacional de Produtores Orgânicos</h>
 </div>
 <div class="row">
   <div class="col-sm-2">
@@ -28,9 +27,8 @@
       {% for organic_farmer in organic_farmer_list %}
       <div class="row mb-3">
         <div class="col bg-light rounded p-3 mb-sm-2 mr-sm-2 border">
-          <h4>{{ organic_farmer.fantasy_name|upper }}</h4>
+          <h4>{{ organic_farmer.name|upper }}</h4>
           <p>Cidade: {{ organic_farmer.address.get_city }}</p>
-          <p>Nome de registro: {{ organic_farmer.name }}</p>
           <p>Registro: {{ organic_farmer.cnpo_register }}</p>
           <p>Tipo de Entidade: {{ organic_farmer.entity.entity_type.name }}</p>
           <p>Entidade: {{ organic_farmer.entity.name }}</p>
@@ -45,10 +43,7 @@
         {% for activity in organic_farmer.activities.all  %}
           {{ activity.name|upper|linebreaksbr }}{% if not forloop.last %}; {% endif %}
         {% endfor %}
-          <h5>Feiras</h5>
-        {% for organic_fair in organic_farmer.farmers_set.all  %}
-          {{ organic_fair|upper|linebreaksbr }};
-        {% endfor %}
+
         {% if user.is_staff %}
         <a class="btn btn-outline-primary d-none d-lg-inline-block mb-3 mb-md-0 ml-md-3" href="#">Atualizar</a>
         {% endif %}
@@ -58,7 +53,5 @@
     </div>
   </div>
 </div>
-{% comment %}
 {% pagination request paginator page_obj %}
-{% endcomment %}
 {% endblock %}

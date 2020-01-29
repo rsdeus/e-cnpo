@@ -23,9 +23,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -43,6 +40,8 @@ INSTALLED_APPS = [
     'watson',
     'location_field.apps.DefaultConfig',
     'leaflet',
+    'import_export',
+    'djgeojson',
     # apps
     'apps.core.apps.CoreConfig',
     'apps.accounts.apps.AccountsConfig',
@@ -137,6 +136,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+MEDIA_URL = '/media/'
+
 # Update database configuration with $DATABASE_URL.
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
@@ -149,11 +150,7 @@ ALLOWED_HOSTS = ['*']
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# E-mail
-EMAIL_HOST = ''
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
-DEFAULT_FROM_EMAIL = 'admin@djangoecommerce.com'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # auth
 LOGIN_URL = 'login'
@@ -171,6 +168,17 @@ LEAFLET_CONFIG = {
     'MIN_ZOOM': 3,
     'MAX_ZOOM': 24,
 }
+
+SERIALIZATION_MODULES = {
+     "geojson": "django.contrib.gis.serializers.geojson",
+  }
+
+# Email
+EMAIL_HOST = 'nhanduti.com.br'
+EMAIL_PORT = '465'
+EMAIL_HOST_USER = 'contato@nhanduti.com.br'
+EMAIL_HOST_PASSWORD = 'Jmascis82'
+EMAIL_USE_SSL = True
 
 
 try:

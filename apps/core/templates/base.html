@@ -3,6 +3,7 @@
 {% load static %}
 {% load leaflet_tags %}
 
+
 <html lang="en">
 
 <head>
@@ -13,19 +14,13 @@
 	<link rel="stylesheet" href="{% static 'assets/bootstrap.css' %}" media="screen" />
 	<link rel="stylesheet" href="{% static 'assets/custom.min.css' %}" media="screen" />
 	<link rel="stylesheet" href="{% static 'assets/signin.css' %}" media="screen" />
-	<style type="text/css">
-		#bemvindo {
-			background-image: url('{% static "fundo2.jpeg" %}');
-		}
-	</style>
-	{% leaflet_css %}
-	{% leaflet_js %}
+
+	{% block style %}{% endblock %}
+	{% block header %}{% endblock %}
+
 </head>
 
-	<body class="">
-
-	{% block header%} {% endblock %}
-
+<body class="">
 <!-- NAVBAR -->
 {% block navbar %}
 		<nav class="navbar navbar-expand-lg fixed-top navbar-light border bg-light">
@@ -43,19 +38,18 @@
 		        <a class="nav-link" href="/sobre/">O Que Significa Nhandutí?</a>
 		      </li>
 		      <li class="nav-item">
-		        <a class="nav-link" href=" {% url 'organic_farmer:organic_farmer_list' %} ">Produtores Orgânicos</a>
+		        <a class="nav-link" href=" {% url 'organic_farmer:organic_farmer_list' %} ">CNPO</a>
 		      </li>
+				<!--
 		      <li class="nav-item">
 		        <a class="nav-link" href="{% url 'organic_fair:organic_fair_list' %}">Feiras Orgânicas</a>
 		      </li>
+		      -->
 					<li class="nav-item">
-						<a class="nav-link" href="{% url 'organic_map:organic_map' %}">Mapa</a>
+						<a class="nav-link" href="{% url 'organic_map:organic_map' %}">Mapa CNPO</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="#">Contato</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">APOIA.se</a>
 					</li>
 		    </ul>
 				<ul class="navbar-nav">
@@ -64,7 +58,7 @@
 						{% if user.is_superuser %}
 							<a class="btn btn-outline-primary d-none d-lg-inline-block mb-3 mb-md-0 ml-md-3" href="{% url 'admin:index' %}">Admin</a>
 						{% else %}
-							<a class="btn btn-outline-primary d-none d-lg-inline-block mb-3 mb-md-0 ml-md-3" href="#">Minha Conta</a>
+							<a class="btn btn-outline-primary d-none d-lg-inline-block mb-3 mb-md-0 ml-md-3" href="{% url 'accounts:index' %}">Minha Conta</a>
 						{% endif %}
 					<a class="btn btn-outline-primary d-none d-lg-inline-block mb-3 mb-md-0 ml-md-3" href="{% url 'accounts:logout' %}">Sair</a>
 					{% else %}
@@ -83,28 +77,28 @@
 <!-- CONTENT -->
 	<div class="container-fluid">
       {% block container %} {% endblock %}
-	</di>
+	</div>
 
-{% block footer %}
 <!-- FOOTER -->
 <footer id="footer">
 	<div class="container">
 			<div class="row">
           <div class="col-sm-12">
-
+			<!--
             <ul class="list-unstyled">
               <li class="float-lg-right"><a href="#top">Voltar ao Topo</a></li>
-							<li><a href="">Blog</a></li>
-              <li><a href="">Twitter</a></li>
-              <li><a href="">Facebook</a></li>
-              <li><a href="">Instagram</a></li>
-              <li><a href="">APOIA.se</a></li>
- 							<li><a href="">Termos e Condições de Uso</a></li>
+				<li><a href="">Blog</a></li>
+              	<li><a href="">Twitter</a></li>
+              	<li><a href="">Facebook</a></li>
+              	<li><a href="">Instagram</a></li>
+               	<li><a href="">APOIA.se</a></li>
+               	<li><a href="">Termos e Condições de Uso</a></li>
             </ul>
+            -->
 
 					<center>
-						<p>© Nhanduti - 2018</p>
-						<p>Desenvolvido Por <a href="https://diagonaltech.com.br">© DiagonalTech - Tecnlogia e Design de Serviços</a></p>
+						<p>© Nhanduti - 2020</p>
+						<p>Desenvolvido Por <a href="https://diagonaltech.com.br">© DiagonalTech - Tecnologia e Design de Serviços</a></p>
 						<p>CNPJ: 31.580.899/0001-92</p>
 						<div>Icons made by
 							<a href="https://www.flaticon.com/authors/mynamepong" title="mynamepong">mynamepong</a>
@@ -117,10 +111,10 @@
 			</div>
 	</div>
 </footer>
-{% endblock %}
+{% block footer %}{% endblock %}
 
-
-		<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-		<script src="{% static 'assets/bootstrap.min.js' %}"></script>
-	</body>
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="{% static 'assets/bootstrap.min.js' %}"></script>
+{% block scripts %} {% endblock %}
+</body>
 </html>
