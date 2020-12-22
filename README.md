@@ -1,4 +1,4 @@
-# Projeto Nhanduti
+# Projeto E-CNPO (Cadastro Nacinal de Produtores Orgânicos)
 ### Sistema de Difusão de Informação da Agricultura Orgânica no Brasil
 
 ## Bem Vindo!
